@@ -12,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.crazy.test.tools.activitys.Card1Activity;
+import com.crazy.test.tools.activitys.Card2Activity;
+import com.crazy.test.tools.activitys.SettingActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,11 +113,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         resetButton();
                         activity.setTitle("CARD1");
                         card1.setTextColor(Color.BLUE);
+                        new Card1Activity().load(viewPager);
                         break;
                     case 1:
                         resetButton();
                         activity.setTitle("CARD2");
                         card2.setTextColor(Color.BLUE);
+                        new Card2Activity().load(viewPager);
                         break;
                     case 2:
                         resetButton();
@@ -124,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         resetButton();
                         activity.setTitle("SETTING");
                         setting.setTextColor(Color.BLUE);
+                        new SettingActivity().load(viewPager);
                         break;
                 }
             }
