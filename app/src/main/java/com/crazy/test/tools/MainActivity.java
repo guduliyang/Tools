@@ -15,6 +15,7 @@ import android.widget.Button;
 import com.crazy.test.tools.activitys.Card1Activity;
 import com.crazy.test.tools.activitys.Card2Activity;
 import com.crazy.test.tools.activitys.SettingActivity;
+import com.crazy.test.tools.utils.Setting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         initViewPage();
         initEvent();
+        Setting setting = new Setting(this);
     }
 
     //初始化控件

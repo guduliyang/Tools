@@ -128,7 +128,7 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/editText7"
+                android:id="@+id/to_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
@@ -137,7 +137,7 @@
                 android:inputType="phone" />
 
             <EditText
-                android:id="@+id/editText8"
+                android:id="@+id/order_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -146,10 +146,10 @@
                 android:inputType="text" />
 
             <Button
-                android:id="@+id/button7"
+                android:id="@+id/orderOne"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="提交" />
         </TableRow>
 
         <TableRow
@@ -157,7 +157,7 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/editText10"
+                android:id="@+id/to_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
@@ -166,7 +166,7 @@
                 android:inputType="phone" />
 
             <EditText
-                android:id="@+id/editText9"
+                android:id="@+id/order_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -175,10 +175,10 @@
                 android:inputType="text" />
 
             <Button
-                android:id="@+id/button8"
+                android:id="@+id/orderTwo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="提交" />
         </TableRow>
 
     </TableLayout>
