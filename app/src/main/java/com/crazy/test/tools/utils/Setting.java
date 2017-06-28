@@ -102,6 +102,10 @@ public class Setting{
         return config.put(key,value);
     }
 
+    public String get(String key){
+        return config.get(key);
+    }
+
     //查询卡一信息
     public boolean submit_one(String phoneNumber){
         Callback callback = new Callback() {

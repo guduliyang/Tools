@@ -1,6 +1,7 @@
 package com.crazy.test.tools.activitys;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ToggleButton;
 import com.crazy.test.tools.R;
+import com.crazy.test.tools.sms.service.SmsService;
+import com.crazy.test.tools.utils.CheckService;
 import com.crazy.test.tools.utils.Setting;
 import java.util.Map;
 
@@ -36,12 +39,14 @@ public class SettingActivity implements View.OnClickListener, CompoundButton.OnC
     private static Button orderOne;
     private static Button orderTwo;
 
+
     public void load(Context context, ViewPager viewPager){
         this.viewPager = viewPager;
         this.context = context;
         setting = Setting.getSetting(context);
         initView();
         initEvent();
+
 
     }
 
@@ -68,6 +73,11 @@ public class SettingActivity implements View.OnClickListener, CompoundButton.OnC
         for (String key : (map = setting.getInfo()).keySet()){
             switch (key){
                 case "smsListen":
+                    if(CheckService.isWork(context,"SmsService")){
+                        setting.put("smsListen","true");
+                    }else {
+                        setting.put("smsListen","false");
+                    }
                     if(map.get(key).equals("true")){
                         smsListen.setChecked(true);
                     }else {
@@ -171,10 +181,13 @@ public class SettingActivity implements View.OnClickListener, CompoundButton.OnC
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch (buttonView.getId()){
             case R.id.smsListen:
+                Intent intent = new Intent(context, SmsService.class);
                 if(isChecked){
+                    context.startService(intent);
                     Log.i(TAG, "onCheckedChanged: smsListen 开");
                     setting.put("smsListen","true");
                 }else {
+                    context.stopService(intent);
                     Log.i(TAG, "onCheckedChanged: smsListen 关");
                     setting.put("smsListen","false");
                 }
