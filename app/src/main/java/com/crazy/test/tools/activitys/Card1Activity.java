@@ -1,21 +1,21 @@
 package com.crazy.test.tools.activitys;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
-
 import com.crazy.test.tools.R;
 import com.crazy.test.tools.utils.Setting;
-
 import java.util.Map;
 
 /**
  * Created by ADMIN on 2017/6/26.
  */
 
-public class Card1Activity extends Activity implements View.OnClickListener{
+public class Card1Activity implements View.OnClickListener{
     private static final String TAG=Card1Activity.class.getSimpleName();
+    private Context context;
+    private Setting setting;
     private ViewPager viewPager;
     private TextView operator;
     private TextView phonenumber;
@@ -23,9 +23,12 @@ public class Card1Activity extends Activity implements View.OnClickListener{
     private TextView name;
     private TextView idcard;
 
-    public void load(ViewPager viewPager){
+    public void load(Context context, ViewPager viewPager){
         this.viewPager = viewPager;
+        this.context = context;
+        setting = Setting.getSetting(context);
         initView();
+        initEvent();
     }
 
     private void initView(){
@@ -36,7 +39,7 @@ public class Card1Activity extends Activity implements View.OnClickListener{
         idcard = (TextView)viewPager.findViewById(R.id.idcard_one);
 
         Map<String,String> map;
-        for(String key : (map = Setting.getCardOne()).keySet()){
+        for(String key : (map = setting.getCardOne()).keySet()){
             switch (key){
                 case "Operators":
                     operator.setText(map.get(key));

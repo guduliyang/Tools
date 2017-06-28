@@ -1,6 +1,6 @@
 package com.crazy.test.tools.activitys;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -8,19 +8,18 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ToggleButton;
-
 import com.crazy.test.tools.R;
 import com.crazy.test.tools.utils.Setting;
-
 import java.util.Map;
 
 /**
  * Created by ADMIN on 2017/6/26.
  */
 
-public class SettingActivity extends Activity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class SettingActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private static final String TAG=SettingActivity.class.getSimpleName();
-    Setting setting = new Setting(this);
+    private Context context;
+    private Setting setting;
 
     private ViewPager viewPager;
     private ToggleButton smsListen;
@@ -37,10 +36,13 @@ public class SettingActivity extends Activity implements View.OnClickListener, C
     private static Button orderOne;
     private static Button orderTwo;
 
-    public void load(ViewPager viewPager){
+    public void load(Context context, ViewPager viewPager){
         this.viewPager = viewPager;
+        this.context = context;
+        setting = Setting.getSetting(context);
         initView();
         initEvent();
+
     }
 
     //初始化控件
@@ -63,7 +65,7 @@ public class SettingActivity extends Activity implements View.OnClickListener, C
         orderTwo = (Button)viewPager.findViewById(R.id.orderTwo);
 
         Map<String,String> map;
-        for (String key : (map = Setting.getInfo()).keySet()){
+        for (String key : (map = setting.getInfo()).keySet()){
             switch (key){
                 case "smsListen":
                     if(map.get(key).equals("true")){
@@ -140,21 +142,27 @@ public class SettingActivity extends Activity implements View.OnClickListener, C
         autoStart.setOnCheckedChangeListener(this);
         autoBlance.setOnCheckedChangeListener(this);
         orderOne.setOnClickListener(this);
-        order_two.setOnClickListener(this);
+        orderTwo.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.submit_one:
-                Setting.submit_one(CardOneNumber.getText().toString().trim());
+                setting.submit_one(CardOneNumber.getText().toString().trim());
                 break;
             case R.id.submit_two:
-                Setting.submit_two(CardTwoNumber.getText().toString().trim());
+                setting.submit_two(CardTwoNumber.getText().toString().trim());
                 break;
-            case R.id.order_one:
+            case R.id.orderOne:
+                String one = to_one.getText().toString().trim();
+                String order =order_one.getText().toString().trim();
+                setting.orderOne(one,order);
                 break;
-            case R.id.order_two:
+            case R.id.orderTwo:
+                String two = to_two.getText().toString().trim();
+                String orderTwo =order_two.getText().toString().trim();
+                setting.orderTwo(two,orderTwo);
                 break;
         }
     }
@@ -165,28 +173,28 @@ public class SettingActivity extends Activity implements View.OnClickListener, C
             case R.id.smsListen:
                 if(isChecked){
                     Log.i(TAG, "onCheckedChanged: smsListen 开");
-                    Setting.put("smsListen","true");
+                    setting.put("smsListen","true");
                 }else {
                     Log.i(TAG, "onCheckedChanged: smsListen 关");
-                    Setting.put("smsListen","false");
+                    setting.put("smsListen","false");
                 }
                 break;
             case R.id.autoStart:
                 if(isChecked){
                     Log.i(TAG, "onCheckedChanged: autoStart 开");
-                    Setting.put("autoStart","true");
+                    setting.put("autoStart","true");
                 }else {
                     Log.i(TAG, "onCheckedChanged: autoStart 关");
-                    Setting.put("autoStart","false");
+                    setting.put("autoStart","false");
                 }
                 break;
             case R.id.autoBlance:
                 if(isChecked){
                     Log.i(TAG, "onCheckedChanged: autoBlance 开");
-                    Setting.put("autoBlance","true");
+                    setting.put("autoBlance","true");
                 }else {
                     Log.i(TAG, "onCheckedChanged: autoBlance 关");
-                    Setting.put("autoBlance","false");
+                    setting.put("autoBlance","false");
                 }
                 break;
         }

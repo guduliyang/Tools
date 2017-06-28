@@ -6,17 +6,13 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import com.crazy.test.tools.activitys.Card1Activity;
 import com.crazy.test.tools.activitys.Card2Activity;
 import com.crazy.test.tools.activitys.SettingActivity;
-import com.crazy.test.tools.utils.Setting;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         initViewPage();
         initEvent();
-        Setting setting = new Setting(this);
+        viewPager.setCurrentItem(0);
     }
 
     //初始化控件
@@ -115,13 +111,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         resetButton();
                         activity.setTitle("CARD1");
                         card1.setTextColor(Color.BLUE);
-                        new Card1Activity().load(viewPager);
+                        new Card1Activity().load(activity,viewPager);
                         break;
                     case 1:
                         resetButton();
                         activity.setTitle("CARD2");
                         card2.setTextColor(Color.BLUE);
-                        new Card2Activity().load(viewPager);
+                        new Card2Activity().load(activity,viewPager);
                         break;
                     case 2:
                         resetButton();
@@ -132,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         resetButton();
                         activity.setTitle("SETTING");
                         setting.setTextColor(Color.BLUE);
-                        new SettingActivity().load(viewPager);
+                        new SettingActivity().load(activity,viewPager);
                         break;
                 }
             }

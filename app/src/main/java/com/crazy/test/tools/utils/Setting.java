@@ -2,19 +2,13 @@ package com.crazy.test.tools.utils;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.crazy.test.tools.okhttp3.HttpClient;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -26,8 +20,11 @@ import okhttp3.Response;
 public class Setting{
     private static final String TAG = Setting.class.getSimpleName();
     private static Config config;
+    private static Context context;
+    private static Setting setting;
 
-    public Setting(Context context){
+    private Setting(Context context){
+        this.context = context;
         config = Config.getConfig(context);
         try {
             config.get("ansy");
@@ -36,8 +33,19 @@ public class Setting{
         }
     }
 
+    public static Setting getSetting(Context context){
+        if(setting == null){
+            synchronized (Setting.class){
+                if(setting == null){
+                    setting = new Setting(context);
+                }
+            }
+        }
+        return setting;
+    }
+
     //获取info界面配置信息
-    public static Map<String,String> getInfo(){
+    public Map<String,String> getInfo(){
         Map<String,String> objectMap = new HashMap<>();
         objectMap.put("smsListen",config.get("smsListen"));
         objectMap.put("autoStart",config.get("autoStart"));
@@ -51,13 +59,51 @@ public class Setting{
         return objectMap;
     }
 
+    //获取卡一信息
+    public Map<String,String> getCardOne(){
+        Map<String,String> map = new HashMap<>();
+        try {
+            JSONObject object = new JSONObject(config.get("cardOneData"));
+            Iterator iterator = object.keys();
+            String key;
+            String value;
+            while (iterator.hasNext()){
+                key = (String) iterator.next();
+                value = (String) object.get(key);
+                map.put(key,value);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
+    //获取卡二信息
+    public Map<String,String> getCardTwo(){
+        Map<String,String> map = new HashMap<>();
+        try {
+            JSONObject object = new JSONObject(config.get("cardTwoData"));
+            Iterator iterator = object.keys();
+            String key;
+            String value;
+            while (iterator.hasNext()){
+                key = (String) iterator.next();
+                value = (String) object.get(key);
+                map.put(key,value);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
     //更新配置文件
-    public static boolean put(String key,String value){
+    public boolean put(String key,String value){
         return config.put(key,value);
     }
 
     //查询卡一信息
-    public static boolean submit_one(String phoneNumber){
+    public boolean submit_one(String phoneNumber){
         Callback callback = new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -81,7 +127,7 @@ public class Setting{
     }
 
     //查询卡二信息
-    public static boolean submit_two(String phoneNumber){
+    public boolean submit_two(String phoneNumber){
         Callback callback = new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -105,42 +151,18 @@ public class Setting{
         return true;
     }
 
-    //获取卡一信息
-    public static Map<String,String> getCardOne(){
-        Map<String,String> map = new HashMap<>();
-        try {
-            JSONObject object = new JSONObject(config.get("cardOneData"));
-            Iterator iterator = object.keys();
-            String key;
-            String value;
-            while (iterator.hasNext()){
-                key = (String) iterator.next();
-                value = (String) object.get(key);
-                map.put(key,value);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return map;
+    //更新卡一查询余额指令
+    public boolean orderOne(String to_one,String order_one){
+        config.put("to_one",to_one);
+        config.put("order_one",order_one);
+        return true;
     }
 
-    //获取卡二信息
-    public static Map<String,String> getCardTwo(){
-        Map<String,String> map = new HashMap<>();
-        try {
-            JSONObject object = new JSONObject(config.get("cardTwoData"));
-            Iterator iterator = object.keys();
-            String key;
-            String value;
-            while (iterator.hasNext()){
-                key = (String) iterator.next();
-                value = (String) object.get(key);
-                map.put(key,value);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return map;
+    //更新卡二查询余额指令
+    public boolean orderTwo(String to_two,String order_two){
+        config.put("to_two",to_two);
+        config.put("order_two",order_two);
+        return true;
     }
 
 }
