@@ -3,6 +3,8 @@ package com.crazy.test.tools.sms.action;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
+
 import com.crazy.test.tools.sms.model.SMS;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +57,7 @@ public class SmsRead {
 
     private static SMS saveToSMS(Cursor cursor){
         SMS sms = new SMS();
+        sms.setMODEL(Build.MODEL);
         if(cursor!=null){
             boolean over = false;
             int i=0;

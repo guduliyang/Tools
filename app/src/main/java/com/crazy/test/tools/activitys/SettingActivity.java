@@ -73,11 +73,6 @@ public class SettingActivity implements View.OnClickListener, CompoundButton.OnC
         for (String key : (map = setting.getInfo()).keySet()){
             switch (key){
                 case "smsListen":
-                    if(CheckService.isWork(context,"SmsService")){
-                        setting.put("smsListen","true");
-                    }else {
-                        setting.put("smsListen","false");
-                    }
                     if(map.get(key).equals("true")){
                         smsListen.setChecked(true);
                     }else {

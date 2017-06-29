@@ -5,6 +5,8 @@ import com.crazy.test.tools.utils.DateFormat;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Iterator;
+
 /**
  * Created by ADMIN on 2016/12/26.
  */
@@ -20,6 +22,7 @@ public class SMS {
      * type :  类型 1是收到的，2是发出的
      * body : 内容
      * service_center : 信服务中心号码编号
+     * MODEL : 手机型号
      */
 
     private String thread_id;
@@ -32,7 +35,59 @@ public class SMS {
     private String service_center;
     private int sub_id;
     private int sim_id;
+    private String MODEL; //手机型号
 
+    public SMS (){}
+
+    public SMS (String jsonString){
+        try {
+            JSONObject object = new JSONObject(jsonString);
+            Iterator<String> stringIterator = object.keys();
+            while (stringIterator.hasNext()){
+                String key = stringIterator.next();
+                switch (key){
+                    case "thread_id":
+                        setThread_id(object.getString(key));
+                        break;
+                    case "address":
+                        setAddress(object.getString(key));
+                        break;
+                    case "date":
+                        setDate(object.getLong(key));
+                        break;
+                    case "read":
+                        setRead(object.getInt(key));
+                        break;
+                    case "status":
+                        setStatus(object.getInt(key));
+                        break;
+                    case "type":
+                        setType(object.getInt(key));
+                        break;
+                    case "body":
+                        setBody(object.getString(key));
+                        break;
+                    case "service_center":
+                        setService_center(object.getString(key));
+                        break;
+                    case "sub_id":
+                        setSub_id(object.getInt(key));
+                        break;
+                    case "sim_id":
+                        setSim_id(object.getInt(key));
+                        break;
+                    case "MODEL":
+                        setMODEL(object.getString(key));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public int getSim_id() {
         return sim_id;
@@ -114,6 +169,14 @@ public class SMS {
         this.service_center = service_center;
     }
 
+    public String getMODEL() {
+        return MODEL;
+    }
+
+    public void setMODEL(String MODEL) {
+        this.MODEL = MODEL;
+    }
+
     public String string(){
         return "From："+address+"\nTime："+ DateFormat.format(date)+"\nBody："+body;
     }
@@ -132,6 +195,7 @@ public class SMS {
             object.put("service_center",service_center);
             object.put("sub_id",sub_id);
             object.put("sim_id",sim_id);
+            object.put("MODEL",MODEL);
         } catch (JSONException e) {
             e.printStackTrace();
         }

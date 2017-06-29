@@ -12,7 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.crazy.test.tools.activitys.Card1Activity;
 import com.crazy.test.tools.activitys.Card2Activity;
+import com.crazy.test.tools.activitys.InfoActivity;
 import com.crazy.test.tools.activitys.SettingActivity;
+import com.crazy.test.tools.utils.CheckService;
+import com.crazy.test.tools.utils.Setting;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         initViewPage();
         initEvent();
+        initService();
         viewPager.setCurrentItem(0);
     }
 
@@ -123,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         resetButton();
                         activity.setTitle("INFO");
                         info.setTextColor(Color.BLUE);
+                        new InfoActivity().load(activity,viewPager);
                         break;
                     case 3:
                         resetButton();
@@ -179,5 +185,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void initService(){
+        if(CheckService.isWork(this,"com.crazy.test.tools.sms.service.SmsService")){
+            Setting.getSetting(this).put("smsListen","true");
+        }else{
+            Setting.getSetting(this).put("smsListen","false");
+        }
+    }
 
 }
