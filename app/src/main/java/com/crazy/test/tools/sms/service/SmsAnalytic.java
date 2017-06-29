@@ -54,6 +54,7 @@ public class SmsAnalytic extends Service {
                 case BLANCE:
                     String blance = analyticBlance();
                     Toast.makeText(this, phoneNumber+"、余额为："+blance, Toast.LENGTH_SHORT).show();
+                    updata.updataBlance(phoneNumber,blance);
                     break;
                 case CAPTCHA:
                     String captcha = analyticCaptcha();

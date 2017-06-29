@@ -36,4 +36,17 @@ public class Updata {
             Log.e(TAG, "smsreciver: "+phone+"上传短信验证码失败！"+ e.getMessage());
         }
     }
+
+    public void updataBlance(String phone,String blance){
+        HttpClient httpClient = new HttpClient();
+        Map<String,String> map = new HashMap<>();
+        map.put("phoneNumber",phone);
+        map.put("balance",blance);
+        try {
+            Response response = httpClient.post(setting.get("updata"),map);
+            Log.i(TAG, "smsreciver: "+phone+"更新余额信息返回："+response.body().string());
+        } catch (IOException e) {
+            Log.e(TAG, "smsreciver: "+phone+"更新余额失败！"+ e.getMessage());
+        }
+    }
 }
