@@ -46,7 +46,12 @@
         <service
             android:name=".sms.service.SmsAnalytic"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+        <service
+            android:name=".timeTask.TimeTaskService"
+            android:enabled="true"
+            android:exported="true" />
+
     </application>
 
 </manifest>

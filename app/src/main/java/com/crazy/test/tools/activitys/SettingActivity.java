@@ -8,9 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 import com.crazy.test.tools.R;
 import com.crazy.test.tools.sms.service.SmsService;
+import com.crazy.test.tools.timeTask.TimeTask;
+import com.crazy.test.tools.timeTask.TimeTaskService;
 import com.crazy.test.tools.utils.CheckService;
 import com.crazy.test.tools.utils.Setting;
 import java.util.Map;
@@ -38,6 +41,7 @@ public class SettingActivity implements View.OnClickListener, CompoundButton.OnC
     private static EditText order_two;
     private static Button orderOne;
     private static Button orderTwo;
+    private static TextView autoBalnceSetting;
 
 
     public void load(Context context, ViewPager viewPager){
@@ -68,6 +72,8 @@ public class SettingActivity implements View.OnClickListener, CompoundButton.OnC
         order_two = (EditText)viewPager.findViewById(R.id.order_two);
         orderOne = (Button)viewPager.findViewById(R.id.orderOne);
         orderTwo = (Button)viewPager.findViewById(R.id.orderTwo);
+
+        autoBalnceSetting = (TextView)viewPager.findViewById(R.id.autoBalnceSetting);
 
         Map<String,String> map;
         for (String key : (map = setting.getInfo()).keySet()){
@@ -148,6 +154,7 @@ public class SettingActivity implements View.OnClickListener, CompoundButton.OnC
         autoBlance.setOnCheckedChangeListener(this);
         orderOne.setOnClickListener(this);
         orderTwo.setOnClickListener(this);
+        autoBalnceSetting.setOnClickListener(this);
     }
 
     @Override
@@ -197,10 +204,14 @@ public class SettingActivity implements View.OnClickListener, CompoundButton.OnC
                 }
                 break;
             case R.id.autoBlance:
+                Intent intentAutoBlance = new Intent(context,TimeTaskService.class);
+                int time = Integer.parseInt(setting.get("intervalBlance"))*60000;
                 if(isChecked){
+                    TimeTask.start(context,time,TimeTaskService.class);
                     Log.i(TAG, "onCheckedChanged: autoBlance 开");
                     setting.put("autoBlance","true");
                 }else {
+                    TimeTask.stop(context,TimeTaskService.class);
                     Log.i(TAG, "onCheckedChanged: autoBlance 关");
                     setting.put("autoBlance","false");
                 }

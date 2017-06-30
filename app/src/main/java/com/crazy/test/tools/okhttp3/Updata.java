@@ -3,9 +3,11 @@ package com.crazy.test.tools.okhttp3;
 import android.content.Context;
 import android.util.Log;
 
+import com.crazy.test.tools.utils.DateFormat;
 import com.crazy.test.tools.utils.Setting;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +44,7 @@ public class Updata {
         Map<String,String> map = new HashMap<>();
         map.put("phoneNumber",phone);
         map.put("balance",blance);
+        map.put("balanceTime", DateFormat.format(new Date().getTime()));
         try {
             Response response = httpClient.post(setting.get("updata"),map);
             Log.i(TAG, "smsreciver: "+phone+"更新余额信息返回："+response.body().string());
