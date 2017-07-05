@@ -92,7 +92,7 @@ public class Card2Activity implements View.OnClickListener{
                         setting.submit_two(setting.get("CardTwoNumber"));
                     }
                 }catch (Exception e){
-                    Toast.makeText(context, "更新失败！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "更新失败！"+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
                 break;

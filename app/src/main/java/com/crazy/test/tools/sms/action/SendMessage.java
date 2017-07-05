@@ -7,6 +7,9 @@ import android.os.Build;
 import android.telephony.SmsManager;
 import android.util.Log;
 
+import com.crazy.test.tools.utils.Reflection;
+
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -45,11 +48,35 @@ public class SendMessage {
             }else if(Coolpad_5200_GSM==witch){
                 method.invoke(smsManager, number, null, smsBody, sIntent, dIntent, Coolpad_5200_GSM);
             }
+            Log.i(TAG, "Coolpad_5200_send: 发送短信成功！");
             return true;
         } catch (Exception e) {
             Log.e(TAG, "Coolpad_5200: 发送短信失败！"+e.getMessage() );
             return false;
         }
+    }
+
+    public boolean Coolpad_5217_send(String number,String smsBody,int witch){
+        sIntent = PendingIntent.getBroadcast(context, 0, new Intent(ACTION_SENT), 0);
+        dIntent = PendingIntent.getBroadcast(context, 0, new Intent(ACTION_DELIVERED), 0);
+        SmsManager smsManager = SmsManager.getDefault();
+        Class[] smsManagerPamas = {String.class, String.class, String.class, PendingIntent.class, PendingIntent.class, int.class};
+//        new Reflection(smsManager.getClass()).getMethod();
+        try {
+            Method method = smsManager.getClass().getDeclaredMethod("sendTextMessageWithPriority",smsManagerPamas);
+            method.setAccessible(true);
+            if(Coolpad_5200_CDMA==witch){
+                method.invoke(smsManager, number, null, smsBody, sIntent, dIntent, Coolpad_5200_CDMA);
+            }else if(Coolpad_5200_GSM==witch){
+                method.invoke(smsManager, number, null, smsBody, sIntent, dIntent, Coolpad_5200_GSM);
+            }
+            Log.i(TAG, "Coolpad_5217_send: 发送短信成功！");
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "Coolpad_5217_send: 发送短信失败！"+e.getMessage() );
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public boolean getBlance(String number,String smsBody,boolean CDMA){
@@ -61,7 +88,7 @@ public class SendMessage {
                 break;
             case Coolpad_5217:
                 temp = CDMA?Coolpad_5200_CDMA:Coolpad_5200_GSM;
-                Coolpad_5200_send(number,smsBody,temp);
+                Coolpad_5217_send(number,smsBody,temp);
                 break;
         }
         return true;

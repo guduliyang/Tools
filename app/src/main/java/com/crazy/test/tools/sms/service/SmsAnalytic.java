@@ -72,19 +72,25 @@ public class SmsAnalytic extends Service {
 
     //获取手机号码
     private void getPhoneNumber(){
-        switch (sms.getMODEL()){
-            case Coolpad_5200:
-                phoneNumber = sms.getSub_id()==1? Setting.getSetting(this).get("CardTwoNumber"):Setting.getSetting(this).get("CardOneNumber");
-                break;
-            case Coolpad_5200S:
-                break;
-            case Coolpad_5217:
-                break;
-            case Lenovo_A355e:
-                break;
-            default:
-                break;
+        try {
+            switch (sms.getMODEL()){
+                case Coolpad_5200:
+                    phoneNumber = sms.getSub_id()==1? Setting.getSetting(this).get("CardTwoNumber"):Setting.getSetting(this).get("CardOneNumber");
+                    break;
+                case Coolpad_5200S:
+                    break;
+                case Coolpad_5217:
+                    phoneNumber = sms.getSub_id()==1? Setting.getSetting(this).get("CardTwoNumber"):Setting.getSetting(this).get("CardOneNumber");
+                    break;
+                case Lenovo_A355e:
+                    break;
+                default:
+                    break;
+            }
+        }catch (Exception e){
+            Log.e(TAG, "getPhoneNumber: 获取手机号码失败！"+e.getMessage());
         }
+
     }
 
     //获取短信类型
