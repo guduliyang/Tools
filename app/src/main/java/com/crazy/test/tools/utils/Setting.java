@@ -1,6 +1,7 @@
 package com.crazy.test.tools.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import com.crazy.test.tools.okhttp3.HttpClient;
 import org.json.JSONException;
@@ -9,6 +10,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import javax.security.auth.login.LoginException;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -72,8 +76,8 @@ public class Setting{
                 value = (String) object.get(key);
                 map.put(key,value);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Log.e(TAG, "getCardOne: 获取卡一信息失败！"+e.getMessage());
         }
         return map;
     }
@@ -91,8 +95,8 @@ public class Setting{
                 value = (String) object.get(key);
                 map.put(key,value);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Log.e(TAG, "getCardTwo: 获取卡二信息失败！"+e.getMessage());
         }
         return map;
     }
@@ -120,6 +124,8 @@ public class Setting{
             public void onResponse(Call call, Response response) throws IOException {
                 String body = response.body().string();
                 config.put("cardOneData",body);
+                context.sendBroadcast(new Intent("android.appwidget.action.APPWIDGET_UPDATE"));
+                Log.i(TAG, "onResponse: "+body);
             }
         };
         HttpClient client = new HttpClient();
@@ -145,6 +151,7 @@ public class Setting{
             public void onResponse(Call call, Response response) throws IOException {
                 String body = response.body().string();
                 config.put("cardTwoData",body);
+                context.sendBroadcast(new Intent("android.appwidget.action.APPWIDGET_UPDATE"));
             }
         };
         HttpClient client = new HttpClient();

@@ -9,13 +9,16 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
+
 import com.crazy.test.tools.R;
 import com.crazy.test.tools.sms.service.SmsService;
 import com.crazy.test.tools.timeTask.TimeTask;
 import com.crazy.test.tools.timeTask.TimeTaskService;
 import com.crazy.test.tools.utils.CheckService;
 import com.crazy.test.tools.utils.Setting;
+
 import java.util.Map;
 
 /**
@@ -23,7 +26,7 @@ import java.util.Map;
  */
 
 public class SettingActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
-    private static final String TAG=SettingActivity.class.getSimpleName();
+    private static final String TAG = SettingActivity.class.getSimpleName();
     private Context context;
     private Setting setting;
 
@@ -44,7 +47,7 @@ public class SettingActivity implements View.OnClickListener, CompoundButton.OnC
     private static TextView autoBalnceSetting;
 
 
-    public void load(Context context, ViewPager viewPager){
+    public void load(Context context, ViewPager viewPager) {
         this.viewPager = viewPager;
         this.context = context;
         setting = Setting.getSetting(context);
@@ -55,98 +58,102 @@ public class SettingActivity implements View.OnClickListener, CompoundButton.OnC
     }
 
     //初始化控件
-    private void initView(){
+    private void initView() {
         //同步手机信息
-        CardOneNumber = (EditText)viewPager.findViewById(R.id.CardOneNumber);
-        CardTwoNumber = (EditText)viewPager.findViewById(R.id.CardTwoNumber);
-        submit_one = (Button)viewPager.findViewById(R.id.submit_one);
-        submit_two = (Button)viewPager.findViewById(R.id.submit_two);
+        CardOneNumber = (EditText) viewPager.findViewById(R.id.CardOneNumber);
+        CardTwoNumber = (EditText) viewPager.findViewById(R.id.CardTwoNumber);
+        submit_one = (Button) viewPager.findViewById(R.id.submit_one);
+        submit_two = (Button) viewPager.findViewById(R.id.submit_two);
         //监控开关
-        smsListen = (ToggleButton)viewPager.findViewById(R.id.smsListen);
-        autoStart = (ToggleButton)viewPager.findViewById(R.id.autoStart);
-        autoBlance = (ToggleButton)viewPager.findViewById(R.id.autoBlance);
+        smsListen = (ToggleButton) viewPager.findViewById(R.id.smsListen);
+        autoStart = (ToggleButton) viewPager.findViewById(R.id.autoStart);
+        autoBlance = (ToggleButton) viewPager.findViewById(R.id.autoBlance);
         //余额查询设置
-        to_one = (EditText)viewPager.findViewById(R.id.to_one);
-        order_one = (EditText)viewPager.findViewById(R.id.order_one);
-        to_two = (EditText)viewPager.findViewById(R.id.to_two);
-        order_two = (EditText)viewPager.findViewById(R.id.order_two);
-        orderOne = (Button)viewPager.findViewById(R.id.orderOne);
-        orderTwo = (Button)viewPager.findViewById(R.id.orderTwo);
+        to_one = (EditText) viewPager.findViewById(R.id.to_one);
+        order_one = (EditText) viewPager.findViewById(R.id.order_one);
+        to_two = (EditText) viewPager.findViewById(R.id.to_two);
+        order_two = (EditText) viewPager.findViewById(R.id.order_two);
+        orderOne = (Button) viewPager.findViewById(R.id.orderOne);
+        orderTwo = (Button) viewPager.findViewById(R.id.orderTwo);
 
-        autoBalnceSetting = (TextView)viewPager.findViewById(R.id.autoBalnceSetting);
+        autoBalnceSetting = (TextView) viewPager.findViewById(R.id.autoBalnceSetting);
 
-        Map<String,String> map;
-        for (String key : (map = setting.getInfo()).keySet()){
-            switch (key){
-                case "smsListen":
-                    if(map.get(key).equals("true")){
-                        smsListen.setChecked(true);
-                    }else {
-                        smsListen.setChecked(false);
-                    }
-                    break;
-                case "autoStart":
-                    if(map.get(key).equals("true")){
-                        autoStart.setChecked(true);
-                    }else {
-                        autoStart.setChecked(false);
-                    }
-                    break;
-                case "autoBlance":
-                    if(map.get(key).equals("true")){
-                        autoBlance.setChecked(true);
-                    }else {
-                        autoBlance.setChecked(false);
-                    }
-                    break;
-                case "CardOneNumber":
-                    try {
-                        CardOneNumber.setText(map.get(key));
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    break;
-                case "CardTwoNumber":
-                    try {
-                        CardTwoNumber.setText(map.get(key));
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    break;
-                case "to_one":
-                    try {
-                        to_one.setText(map.get(key));
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    break;
-                case "to_two":
-                    try {
-                        to_two.setText(map.get(key));
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    break;
-                case "order_one":
-                    try {
-                        order_one.setText(map.get(key));
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    break;
-                case "order_two":
-                    try {
-                        order_two.setText(map.get(key));
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    break;
+        Map<String, String> map;
+        for (String key : (map = setting.getInfo()).keySet()) {
+            try {
+                switch (key) {
+                    case "smsListen":
+                        if (map.get(key).equals("true")) {
+                            smsListen.setChecked(true);
+                        } else {
+                            smsListen.setChecked(false);
+                        }
+                        break;
+                    case "autoStart":
+                        if (map.get(key).equals("true")) {
+                            autoStart.setChecked(true);
+                        } else {
+                            autoStart.setChecked(false);
+                        }
+                        break;
+                    case "autoBlance":
+                        if (map.get(key).equals("true")) {
+                            autoBlance.setChecked(true);
+                        } else {
+                            autoBlance.setChecked(false);
+                        }
+                        break;
+                    case "CardOneNumber":
+                        try {
+                            CardOneNumber.setText(map.get(key));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "CardTwoNumber":
+                        try {
+                            CardTwoNumber.setText(map.get(key));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "to_one":
+                        try {
+                            to_one.setText(map.get(key));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "to_two":
+                        try {
+                            to_two.setText(map.get(key));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "order_one":
+                        try {
+                            order_one.setText(map.get(key));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "order_two":
+                        try {
+                            order_two.setText(map.get(key));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+            }catch (Exception e){
+                Log.e(TAG, "initView: 初始化失败！"+e.getMessage() );
             }
         }
     }
 
     //初始化事件
-    private void initEvent(){
+    private void initEvent() {
         submit_one.setOnClickListener(this);
         submit_two.setOnClickListener(this);
         smsListen.setOnCheckedChangeListener(this);
@@ -159,7 +166,7 @@ public class SettingActivity implements View.OnClickListener, CompoundButton.OnC
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.submit_one:
                 setting.submit_one(CardOneNumber.getText().toString().trim());
                 break;
@@ -168,53 +175,61 @@ public class SettingActivity implements View.OnClickListener, CompoundButton.OnC
                 break;
             case R.id.orderOne:
                 String one = to_one.getText().toString().trim();
-                String order =order_one.getText().toString().trim();
-                setting.orderOne(one,order);
+                String order = order_one.getText().toString().trim();
+                setting.orderOne(one, order);
                 break;
             case R.id.orderTwo:
                 String two = to_two.getText().toString().trim();
-                String orderTwo =order_two.getText().toString().trim();
-                setting.orderTwo(two,orderTwo);
+                String orderTwo = order_two.getText().toString().trim();
+                setting.orderTwo(two, orderTwo);
                 break;
         }
     }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()){
+        switch (buttonView.getId()) {
             case R.id.smsListen:
                 Intent intent = new Intent(context, SmsService.class);
-                if(isChecked){
+                if (isChecked) {
                     context.startService(intent);
                     Log.i(TAG, "onCheckedChanged: smsListen 开");
-                    setting.put("smsListen","true");
-                }else {
+                    setting.put("smsListen", "true");
+                } else {
                     context.stopService(intent);
                     Log.i(TAG, "onCheckedChanged: smsListen 关");
-                    setting.put("smsListen","false");
+                    setting.put("smsListen", "false");
                 }
                 break;
             case R.id.autoStart:
-                if(isChecked){
+                if (isChecked) {
                     Log.i(TAG, "onCheckedChanged: autoStart 开");
-                    setting.put("autoStart","true");
-                }else {
+                    setting.put("autoStart", "true");
+                } else {
                     Log.i(TAG, "onCheckedChanged: autoStart 关");
-                    setting.put("autoStart","false");
+                    setting.put("autoStart", "false");
                 }
                 break;
             case R.id.autoBlance:
-                Intent intentAutoBlance = new Intent(context,TimeTaskService.class);
-                int time = Integer.parseInt(setting.get("intervalBlance"))*60000;
-                if(isChecked){
-                    TimeTask.start(context,time,TimeTaskService.class);
-                    Log.i(TAG, "onCheckedChanged: autoBlance 开");
-                    setting.put("autoBlance","true");
-                }else {
-                    TimeTask.stop(context,TimeTaskService.class);
-                    Log.i(TAG, "onCheckedChanged: autoBlance 关");
-                    setting.put("autoBlance","false");
+                try {
+                    Intent intentAutoBlance = new Intent(context, TimeTaskService.class);
+                    if (setting.get("intervalBlance") != null && setting.get("intervalBlance") != "") {
+                        int time = Integer.parseInt(setting.get("intervalBlance")) * 60000;
+                        if (isChecked) {
+                            TimeTask.start(context, time, TimeTaskService.class);
+                            Log.i(TAG, "onCheckedChanged: autoBlance 开");
+                            setting.put("autoBlance", "true");
+                        } else {
+                            TimeTask.stop(context, TimeTaskService.class);
+                            Log.i(TAG, "onCheckedChanged: autoBlance 关");
+                            setting.put("autoBlance", "false");
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "onCheckedChanged: " + e.getMessage());
+                    Toast.makeText(context, "操作失败！请先设置查询频率！", Toast.LENGTH_SHORT).show();
                 }
+
                 break;
         }
     }

@@ -37,28 +37,34 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/blanceOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="卡一余额" />
+
+            <Button
+                android:id="@+id/blanceTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="卡二余额"/>
+
+        </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发送接收到短信广播" />
+
+        </TableRow>
+
     </TableLayout>
 
-    <Button
-        android:id="@+id/blanceOne"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="卡一余额" />
-
-    <Button
-        android:id="@+id/blanceTwo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="卡二余额" />
-
-    <Button
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="模拟发送接收到短信广播" />
 </LinearLayout>

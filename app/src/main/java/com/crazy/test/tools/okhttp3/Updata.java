@@ -52,4 +52,17 @@ public class Updata {
             Log.e(TAG, "smsreciver: "+phone+"更新余额失败！"+ e.getMessage());
         }
     }
+
+    public void upataPwd(String phone,String password){
+        HttpClient httpClient = new HttpClient();
+        Map<String,String> map = new HashMap<>();
+        map.put("phoneNumber",phone);
+        map.put("pwd",password);
+        try {
+            Response response = httpClient.post(setting.get("updata"),map);
+            Log.i(TAG, "upataPwd: "+phone+"更新密码返回："+response.body().string());
+        } catch (IOException e) {
+            Log.e(TAG, "upataPwd: "+phone+"更新密码失败："+e.getMessage() );
+        }
+    }
 }

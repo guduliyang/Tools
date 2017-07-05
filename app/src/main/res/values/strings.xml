@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Tools</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="operators">运营商：</string>
+    <string name="PhoneNumber">手机号：</string>
+    <string name="pwd">密    码：</string>
+    <string name="name">姓    名：</string>
+    <string name="idcard">身份证：</string>
+    <string name="newPwd">新密码：</string>
 </resources>

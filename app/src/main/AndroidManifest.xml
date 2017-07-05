@@ -3,6 +3,8 @@
     package="com.crazy.test.tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/><!-- 读取通讯录权限 -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/><!-- 写入通讯录权限 -->
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -52,6 +54,15 @@
             android:enabled="true"
             android:exported="true" />
 
+        <receiver android:name=".activitys.ToolsWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/tools_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
